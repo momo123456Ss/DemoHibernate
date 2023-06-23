@@ -7,7 +7,6 @@ package com.mycompany.pojo;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,13 +24,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Admin
  */
 @Entity
-@Table(name = "tag")
+@Table(name = "category")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t"),
-    @NamedQuery(name = "Tag.findById", query = "SELECT t FROM Tag t WHERE t.id = :id"),
-    @NamedQuery(name = "Tag.findByName", query = "SELECT t FROM Tag t WHERE t.name = :name")})
-public class Tag implements Serializable {
+    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
+    @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
+    @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name")})
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,17 +41,17 @@ public class Tag implements Serializable {
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tagId")
-    private Set<ProdTag> prodTagSet;
+    @OneToMany(mappedBy = "categoryId")
+    private Set<Product> productSet;
 
-    public Tag() {
+    public Category() {
     }
 
-    public Tag(Integer id) {
+    public Category(Integer id) {
         this.id = id;
     }
 
-    public Tag(Integer id, String name) {
+    public Category(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -74,12 +73,12 @@ public class Tag implements Serializable {
     }
 
     @XmlTransient
-    public Set<ProdTag> getProdTagSet() {
-        return prodTagSet;
+    public Set<Product> getProductSet() {
+        return productSet;
     }
 
-    public void setProdTagSet(Set<ProdTag> prodTagSet) {
-        this.prodTagSet = prodTagSet;
+    public void setProductSet(Set<Product> productSet) {
+        this.productSet = productSet;
     }
 
     @Override
@@ -92,10 +91,10 @@ public class Tag implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tag)) {
+        if (!(object instanceof Category)) {
             return false;
         }
-        Tag other = (Tag) object;
+        Category other = (Category) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -104,7 +103,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.pojo.Tag[ id=" + id + " ]";
+        return "com.mycompany.pojo.Category[ id=" + id + " ]";
     }
     
 }

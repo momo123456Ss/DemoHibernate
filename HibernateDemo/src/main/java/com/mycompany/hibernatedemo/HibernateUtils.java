@@ -4,9 +4,12 @@
  */
 package com.mycompany.hibernatedemo;
 
-import com.mycompany.pojo.Categorys;
+import com.mycompany.pojo.Category;
+import com.mycompany.pojo.Comment;
+import com.mycompany.pojo.ProdTag;
 import com.mycompany.pojo.Product;
 import com.mycompany.pojo.Tag;
+import com.mycompany.pojo.User;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -29,13 +32,17 @@ public class HibernateUtils {
         props.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
         props.put(Environment.URL, "jdbc:mysql://localhost/saledb");
         props.put(Environment.USER, "root");
-        props.put(Environment.PASS, "Admin@123");
+        props.put(Environment.PASS, "0344142375");
         props.put(Environment.SHOW_SQL, "true");
 
         conf.setProperties(props);
-        conf.addAnnotatedClass(Categorys.class);
+        conf.addAnnotatedClass(Category.class);
         conf.addAnnotatedClass(Tag.class);
         conf.addAnnotatedClass(Product.class);
+        conf.addAnnotatedClass(ProdTag.class);
+        conf.addAnnotatedClass(User.class);
+        conf.addAnnotatedClass(Comment.class);
+
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
         factory = (SessionFactory) conf.buildSessionFactory(serviceRegistry);
